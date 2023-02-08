@@ -4,12 +4,14 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+# DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-DEBUG = True
 
 LOGIN_URL= '/auth/signin'
-# ALLOWED_HOSTS = ['', 'web-production-e0e6.up.railway.app' , "https://web-production-e0e6.up.railway.app"]
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'web-production-e0e6.up.railway.app' , "https://web-production-e0e6.up.railway.app"]
+
+CSRF_TRUSTED_ORIGINS = ["https://web-production-e0e6.up.railway.app"]
 
 # Application definition
 
@@ -118,8 +120,8 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
