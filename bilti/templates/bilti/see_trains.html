@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Information</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/add_train.css' %}">
+
+    <style>
+
+        form {
+          width: 50%;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+        }
+        
+        label {
+          font-weight: bold;
+          margin-top: 10px;
+          display: block;
+        }
+        
+        input[type="text"], input[type="submit"] {
+          padding: 10px;
+          margin-top: 10px;
+          width: 100%;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+        }
+        
+        input[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+          cursor: pointer;
+        }
+    </style>
+    <style>
+        .dark-table {
+          font-family: Arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+  
+        .dark-table thead tr {
+          background-color: #333;
+          color: #fff;
+        }
+  
+        .dark-table th,
+        .dark-table td {
+          padding: 8px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+  
+        .dark-table tbody tr:nth-child(odd) {
+          background-color: #444;
+        }
+      </style>
+</head>
+<body>
+    <div id="message">{{message}}</div>
+
+    
+    <form action = "/bilti/train/" method="post">
+        {% csrf_token %}
+        <div class="train_information">
+            <h3>Train Information</h3>
+            <label for="train_number">Train Number:</label>
+  
+            <input type="number" name="train_number" id="train_number" required />
+            <div id="train_details" style="display: none">
+              <br />
+              <label for="train_name">Train Name:</label>
+  
+              <input name="train_name" id="train_name" readonly required />
+              <!-- <input name="train_gst" id="train_gst" readonly /> -->
+              <br />
+              <button type="button" id="train_edit" onclick="editTrain('train')">
+                Edit
+              </button>
+            </div>
+  
+            <div
+              class="suggestions"
+              id="train_suggestions"
+              style="display: none"
+            ></div>
+          </div>
+          <br />
+  
+          <label for="start_date">Start Date:</label>
+          <input type="date" id="start_date" name="start_date" required />
+          <br />
+
+          <label for="end_date">End Date:</label>
+          <input type="date" id="end_date" name="end_date"  required />
+          <br />
+  
+          
+        {% comment %} <label for="train_from">Train From:</label>
+        <input type="text" id="train_from" name="train_from" value="{{train_to}}">
+        
+        <label for="train_to">Train To:</label>
+        <input type="text" id="train_to" name="train_to" value="{{train_from}}">
+        
+        <label for="mr_amount">MR Amount:</label>
+        <input type="number" step="any" id="mr_amount" name="mr_amount" value="{{mr_amount}}">
+         {% endcomment %}
+        <input type="submit" value="Submit">
+      </form>
+
+
+      <div style="display:{{display}}" id="train_ledger_information">
+
+        <div id="train_information_data" >
+            <label for="" id="train_information_number">Train Number : {{train.number}}</label>
+    
+            <br />
+            <label for="" id="train_information_name"
+              >Train Name : {{train.name}}</label
+            >
+            <br />
+            <label for="" id="train_information_source"
+              >Train Source : {{train.arrival}}</label
+            >
+            <br />
+            <label for="" id="train_information_destination"
+              >Train Destination : {{train.destination}}</label
+            >
+            <br />
+            <label for="" id="mr_amount"
+            >Train MR Amount : {{train.mr_amount}}</label
+          >
+          <br />
+          </div>
+    
+
+      <div id="bill_information">
+
+        <h3>Bill</h3>
+        <table class="dark-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>ID</th>
+            {% comment %} <th>Source</th> {% endcomment %}
+            {% comment %} <th>Destination</th> {% endcomment %}
+            <th>Party Name</th>
+            <th>No. of Packages</th>
+            <th>Weight</th>
+            <th>Rate</th>
+            <th>Total Amount</th>
+            <th>MR Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bill in bills %}
+          <tr>
+            <td>{{ bill.date }}</td>
+            <td>{{ bill.id }}</td>
+            {% comment %} <td>{{ bill.from_destination }}</td> {% endcomment %}
+            {% comment %} <td>{{ bill.to_destination }}</td> {% endcomment %}
+            <td>{{ bill.party }}</td>
+            <td>{{ bill.no_of_packages }}</td>
+            <td>{{ bill.weight }}</td>
+            <td>{{ bill.price_per_weight }}</td>
+            <td>{{ bill.amount }}</td>
+            <td>{{ bill.mr_amount }}</td>
+          </tr>
+          {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+      
+
+</body>
+<script src="{% static 'js/get_train.js' %}"></script>
+<script>
+  var date = new Date();
+
+var day = date.getDate();
+var month = date.getMonth() + 1;
+var year = date.getFullYear();
+
+if (month < 10) month = "0" + month;
+if (day < 10) day = "0" + day;
+
+var today = year + "-" + month + "-" + day;       
+document.getElementById("end_date").value = today;
+day = day - 10;
+if(day < 1) day = 1;
+if (day < 10) day = "0" + day;
+
+var today = year + "-" + month + "-" + day;       
+document.getElementById("start_date").value = today;
+  {% comment %} document.getElementById('start_date').value = new Date().toDateInputValue();
+  document.getElementById('end_date').value = new Date().toDateInputValue(); {% endcomment %}
+ 
+</script>
+</html>

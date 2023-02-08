@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Transaction Form</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/add_transactions.css' %}">
+
+    <style>
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+      input, textarea, select {
+        padding: 10px;
+        margin: 10px 0;
+        width: 300px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        width: 100px;
+        background-color: green;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">{{message}}</div>
+    <div class="form-container">
+      <form method="post" action="">
+        {% csrf_token %}
+        <br>
+        {% comment %} <label for="party_name">Party Name:</label> {% endcomment %}
+        <input
+          name="party_name"
+          type="text"
+          class="form-control"
+          id="party_name"
+          placeholder="Party Name"
+        />
+        <input type="hidden" name="party_id" id="party_id" readonly>
+        <div id="party_details" style="display: none">
+
+            <input  name="party_address" id="party_address" readonly>
+            <input  name="party_gst" id="party_gst" readonly>
+            <button type="button" id="party_edit" onclick="editParty('party')">Edit</button>
+        </div>
+        <div
+          class="suggestions"
+          id="party_suggestions"
+          style="display: none"
+        ></div>
+        <br>
+
+        <input type="text" name="narration" placeholder="Narration"><br>
+        <!-- <select name="party">
+          {% for p in parties %}
+            <option value="{{ p.id }}">{{ p.name }}</option>
+          {% endfor %}
+        </select><br> -->
+        <input type="number" step="0.01" name="amount" placeholder="Amount"><br>
+        <select name="type">
+          <option value="debit">Debit</option>
+          <option value="credit">Credit</option>
+        </select><br>
+        <input type="datetime-local" id="date" name="date" placeholder="Date"><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
+  <script>
+    {% comment %} document.getElementById("party_name").addEventListener("input",handleInput) {% endcomment %}
+    var now = new Date();
+now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+document.getElementById('date').value = now.toISOString().slice(0,16);
+  // var today = new Date();
+  // var dd = String(today.getDate()).padStart(2, '0');
+  // var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  // var yyyy = today.getFullYear();
+  
+  // today = dd +  '-' + mm + '-' + yyyy ;
+  // today = yyyy + '-' + mm + '-' + dd;
+  // document.querySelector("input[name=date]").value = today;
+</script>
+<script src="{% static 'js/get_party.js' %}"></script>
+</html>

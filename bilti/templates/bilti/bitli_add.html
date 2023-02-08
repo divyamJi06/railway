@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bilti Form</title>
+    {% load static %}
+    <style>
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+      input,
+      textarea,
+      select {
+        padding: 10px;
+        margin: 10px 0;
+        width: 300px;
+        font-size: 16px;
+      }
+      input[type="submit"] {
+        width: 100px;
+        background-color: green;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/add_bilti.css' %}" />
+  </head>
+  <body>
+    <div id="message">{{message}}</div>
+    <div class="form-container">
+      <form method="post" action="/bilti/save_bilti/">
+        {% csrf_token %}
+        <br />
+
+        <div class="train_information">
+          <h3>Train Information</h3>
+          <label for="train_number">Train Number:</label>
+
+          <input type="number" name="train_number" id="train_number" required />
+          <div id="train_details" style="display: none">
+            <br />
+            <label for="train_name">Train Name:</label>
+
+            <input name="train_name" id="train_name" readonly required />
+            <!-- <input name="train_gst" id="train_gst" readonly /> -->
+            <br />
+            <button type="button" id="train_edit" onclick="editTrain('train')">
+              Edit
+            </button>
+          </div>
+
+          <div
+            class="suggestions"
+            id="train_suggestions"
+            style="display: none"
+          ></div>
+        </div>
+        <br />
+
+
+        
+        <div id="consignee_information">
+          <h3 for="Consignee Information">Consignee Information</h3>
+          <label for="consignee_namae">Consignee GST:</label>
+
+          <input
+            name="consignee_name"
+            type="text"
+            class="form-control"
+            id="consignee_name"
+            placeholder="Consignee Name"
+            required
+          />
+          <input
+            type="hidden"
+            name="consignee_id"
+            id="consignee_id"
+            required
+            readonly
+          />
+          <div id="consignee_details" style="display: none">
+            <label for="consignee_address">Consignee Address:</label>
+
+            <input name="consignee_address" id="consignee_address" readonly />
+            <br />
+            <label for="consignee_gst">Consignee Name:</label>
+
+            <input name="consignee_gst" id="consignee_gst" readonly />
+            <br /><button
+              type="button"
+              id="consignee_edit"
+              onclick="editParty('consignee')"
+            >
+              Edit
+            </button>
+            <br />
+          </div>
+          <div
+            class="suggestions"
+            id="consignee_suggestions"
+            style="display: none"
+          ></div>
+        </div>
+        <br /><br />
+        <div id="consignor_information">
+          <h3 for="Consignor Information">Consignor Information</h3>
+          <label for="consignor_name">Consignor Name:</label>
+
+          <input
+            name="consignor_name"
+            type="text"
+            class="form-control"
+            id="consignor_name"
+            placeholder="Consignor Name"
+            required
+          />
+          <br />
+          <input
+            type="hidden"
+            name="consignor_id"
+            id="consignor_id"
+            required
+            readonly
+          />
+          <div id="consignor_details" style="display: none">
+            <label for="consignor_address">Consignor Address:</label>
+
+            <input name="consignor_address" id="consignor_address" readonly />
+            <br />
+            <label for="consignor_gst">Consignor GST:</label>
+            <input name="consignor_gst" id="consignor_gst" readonly /> <br />
+            <button
+              type="button"
+              id="consignor_edit"
+              onclick="editParty('consignor')"
+            >
+              Edit
+            </button>
+          </div>
+          <br />
+          <div
+            class="suggestions"
+            id="consignor_suggestions"
+            style="display: none"
+          ></div>
+        </div>
+
+        <h3>Bill Information</h3>
+        {% comment %} <label for="bill_number">Bill Number:</label>
+        <input type="text" id="bill_number" name="bill_number" required />
+        <br /> {% endcomment %}
+        <label for="bill_date">Date:</label>
+        <input type="datetime-local" id="bill_date" name="bill_date" required />
+        <br />
+
+        <label for="exp_date_of_delivery">Expected Date of Delivery:</label>
+        <input
+          type="date"
+          id="exp_date_of_delivery"
+          name="exp_date_of_delivery"
+          required
+        />
+        <br />
+
+        <label for="no_of_packages">Number of Packages:</label>
+        <input
+          type="number"
+          id="no_of_packages"
+          name="no_of_packages"
+          required
+        />
+
+        <div class="input-group">
+          <label for="weight-per-package">Weight per Package (kg):</label>
+          <input
+            type="number"
+            id="weight-per-package"
+            name="weight_per_package"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="price-per-weight">Price per Weight (per kg):</label>
+          <input
+            type="number"
+            id="price-per-weight"
+            name="price_per_weight"
+            required
+          />
+        </div>
+        <div id="bill_amount_details" style="display: none">
+          <div class="input-group">
+            <label for="total-amount">Total Amount:</label>
+            <input type="text" id="total-amount" name="total-amount" readonly />
+          </div>
+          <div class="input-group">
+            <label for="total-bill">Total Bill (including GST @ 5%):</label>
+            <input type="text" id="total-bill" name="total-bill" readonly />
+          </div>
+        </div>
+        <button type="button" onclick="calculateTotal()">Calculate</button>
+
+        <br />
+        <label for="from_destination">From Destination:</label>
+        <input
+          type="text"
+          id="from_destination"
+          name="from_destination"
+          required
+        />
+
+        <br />
+        <label for="to_destination">To Destination:</label>
+        <input type="text" id="to_destination" name="to_destination" required />
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+  <script src="{% static 'js/get_party_bilti.js' %}"></script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Train</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/add_train.css' %}">
+
+    <style>
+
+        form {
+          width: 50%;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+        }
+        
+        label {
+          font-weight: bold;
+          margin-top: 10px;
+          display: block;
+        }
+        
+        input[type="text"], input[type="submit"] {
+          padding: 10px;
+          margin-top: 10px;
+          width: 100%;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+        }
+        
+        input[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+          cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {{message}}
+    
+    <form action = "/bilti/add_train/" method="post">
+        {% csrf_token %}
+        <label for="train_number">Train Number:</label>
+        <input type="number" id="train_number" name="train_number" value="{{train_number}}">
+        
+        <label for="train_name">Train Name:</label>
+        <input type="text" id="train_name" name="train_name" value="{{train_name}}">
+        
+        <label for="train_from">Train From:</label>
+        <input type="text" id="train_from" name="train_from" value="{{train_to}}">
+        
+        <label for="train_to">Train To:</label>
+        <input type="text" id="train_to" name="train_to" value="{{train_from}}">
+        
+        <label for="mr_amount">MR Amount:</label>
+        <input type="number" step="any" id="mr_amount" name="mr_amount" value="{{mr_amount}}">
+        
+        <input type="submit" value="Submit">
+      </form>
+      
+      
+      
+      
+      
+
+</body>
+</html>

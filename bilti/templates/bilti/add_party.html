@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Party</title>
+    <style>
+    form {
+        width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid gray;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+      
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: lightgray;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+    {% load static %}
+      <link rel="stylesheet" href="{% static 'css/add_party.css' %}">
+      
+</head>
+<body>
+    {{message}}
+    <form method="post" action = "/bilti/add_party/">
+        {% csrf_token %}
+        <!-- <div>
+          <label for="id">Party ID:</label>
+          <input type="number" id="id" name="id">
+        </div> -->
+        <div>
+          <label for="name">Party Name:</label>
+          <input type="text" id="name" name="name" value="{{name}}" required>
+        </div>
+        <div>
+          <label for="address">Address:</label>
+          <textarea id="address" name="address" value="{{address}}"  required></textarea>
+        </div>
+        <div>
+          <label for="gst">GST Number:</label>
+          <input type="text" id="gst" name="gst" value="{{gst}}" required>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      
+</body>
+</html>
