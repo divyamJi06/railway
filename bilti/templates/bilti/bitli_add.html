@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{% static 'css/add_bilti.css' %}" />
   </head>
   <body>
+    <h1 style="text-align: center;"><a style="text-decoration: none;color: #c58415;" href="/"> MGT CARGO </a></h1>
+
     <div id="message">{{message}}</div>
     <div class="form-container">
       <form method="post" action="/bilti/save_bilti/">
@@ -152,7 +154,12 @@
         <h3>Bill Information</h3>
         {% comment %} <label for="bill_number">Bill Number:</label>
         <input type="text" id="bill_number" name="bill_number" required />
-        <br /> {% endcomment %}
+        <br />  {% endcomment %}
+
+        <label for="gr_number">Bill Number:</label>
+        <input type="text" id="gr_number" name="gr_number" required />
+        <br /> 
+
         <label for="bill_date">Date:</label>
         <input type="datetime-local" id="bill_date" name="bill_date" required />
         <br />

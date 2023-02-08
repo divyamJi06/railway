@@ -63,6 +63,8 @@
       </style>
 </head>
 <body>
+  <h1 style="text-align: center;"><a style="text-decoration: none;color: #c58415;" href="/"> MGT CARGO </a></h1>
+
     <div id="message">{{message}}</div>
 
     
@@ -147,7 +149,7 @@
         <thead>
           <tr>
             <th>Date</th>
-            <th>ID</th>
+            <th>GR No.</th>
             {% comment %} <th>Source</th> {% endcomment %}
             {% comment %} <th>Destination</th> {% endcomment %}
             <th>Party Name</th>
@@ -162,7 +164,7 @@
           {% for bill in bills %}
           <tr>
             <td>{{ bill.date }}</td>
-            <td>{{ bill.id }}</td>
+            <td>{{ bill.gr_number }}</td>
             {% comment %} <td>{{ bill.from_destination }}</td> {% endcomment %}
             {% comment %} <td>{{ bill.to_destination }}</td> {% endcomment %}
             <td>{{ bill.party }}</td>

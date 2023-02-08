@@ -1,9 +1,12 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+# from django.shortcuts import render, redirect
+# from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 def signup(request):
-
     if request.user.is_authenticated:
         return redirect('/bilti/user/')
     if request.method == 'POST':
@@ -21,18 +24,16 @@ def signup(request):
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+
 
 def signin(request):
     nextURL = request.GET.get("next")
-    if(nextURL== None):
-        nextURL = '/bilti/user/'
+    if(nextURL == None):
+        nextURL = '/'
     print(nextURL)
     if request.user.is_authenticated:
         print(request.user)
-        return redirect(request, nextURL)
+        return redirect( nextURL)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -47,10 +48,8 @@ def signin(request):
         form = AuthenticationForm()
         return render(request, 'signin.html', {'form': form})
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout
 
 def signout(request):
     logout(request)
-    return redirect('/bilti/')
+    return redirect('/')
 

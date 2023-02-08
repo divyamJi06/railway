@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ic-6sxgj%^mkj59t98k7p9q_p=f7edofy+98s7$&%elm!z2pio
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 LOGIN_URL= '/auth/signin'
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '*']
 
 
 # Application definition
@@ -128,7 +128,7 @@ import os
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'bilti/static/'), 
        os.path.join(BASE_DIR, 'bilti/static/'),
-       os.path.join(BASE_DIR, 'user/static/'),
+    #    os.path.join(BASE_DIR, 'user/static/'),
 ]
 
 

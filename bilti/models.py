@@ -32,6 +32,7 @@ class Bill(models.Model):
     weight = models.FloatField()
     price_per_weight = models.FloatField()
     amount = models.FloatField()
+    gr_number = models.IntegerField(default=0)
 
     consignee = models.ForeignKey(
         Party, on_delete=models.CASCADE, related_name="consignee")

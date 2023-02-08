@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return HttpResponse("Hello, world. HELLLLOOOOOO!!!!!! You're at the polls index.")
+    # return HttpResponse("Hello, world. HELLLLOOOOOO!!!!!! You're at the polls index.")
+    return render(request,"index.html")
 
 @login_required
 def homepage(request):
@@ -35,7 +36,7 @@ def get_train(request):
 
             bill_list.append({
                 "date": bill.date,
-                "id": bill.id,
+                "gr_number": bill.gr_number,
                 # "from_destination": bill.from_destination,
                 # "to_destination": bill.to_destination,
                 "party" : bill.consignee.name,
@@ -48,9 +49,6 @@ def get_train(request):
             data['bills'] = bill_list
             data['display'] = "block"
             data['train'] = train
-
-
-
         
 
     return render(request, 'see_trains.html',data)
@@ -73,8 +71,11 @@ def get_party(request):
         transaction_list = []
         balance = 0
         for transaction in transactions:
+            print(transaction)
+            print(transaction.amount)
+            print(balance)
 
-            if (transaction.type == "credit"):
+            if ("credit" in transaction.type):
 
                 balance += transaction.amount
                 transaction_list.append({
@@ -107,7 +108,7 @@ def get_party(request):
 
             bill_list.append({
                 "date": bill.date,
-                "id": bill.id,
+                "gr_number": bill.gr_number,
                 "train_name": bill.train_info.name,
                 "to_destination": bill.to_destination,
                 "no_of_packages": bill.no_of_packages,
@@ -116,8 +117,9 @@ def get_party(request):
                 "amount": bill.amount,
             })
 
-            data['transactions'] = transaction_list
-            data['bills'] = bill_list
+        data['transactions'] = transaction_list
+        data['bills'] = bill_list
+        print(data)
 
         return render(request, 'see_transactions.html', data)
     # print(name)
@@ -360,6 +362,7 @@ def save_bilti(request):
         consignee_id = request.POST.get('consignee_id')
         consignor_id = request.POST.get('consignor_id')
         # bill_number = request.POST.get('bill_number')
+        gr_number = request.POST.get('gr_number')
         bill_date = request.POST.get('bill_date')
         exp_date_of_delivery = request.POST.get('exp_date_of_delivery')
         no_of_packages = int(request.POST.get('no_of_packages'))
@@ -380,6 +383,7 @@ def save_bilti(request):
             consignee=consignee,
             consignor=consignor,
             # bill_no=bill_no,
+            gr_number = gr_number , 
             date=bill_date,
             exp_date_of_delivery=exp_date_of_delivery,
             no_of_packages=no_of_packages,

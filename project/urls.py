@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from . import views
+
+handler404 = views.error404
+handler500 = views.error500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index),
     path('bilti/',include('bilti.urls')),
     path('auth/',include('user.urls')),
     # path('accounts/login/',include('user.urls')),
