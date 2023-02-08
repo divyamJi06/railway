@@ -18,5 +18,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('bilti/',include('bilti.urls'))
+    path('bilti/',include('bilti.urls')),
+    path('auth/',include('user.urls')),
+    # path('accounts/login/',include('user.urls')),
 ]

@@ -4,17 +4,18 @@ from .models import Party, Bill, TrainInformation, Transaction
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime, timedelta
-
+from django.contrib.auth.decorators import login_required
 
 
 
 def index(request):
     return HttpResponse("Hello, world. HELLLLOOOOOO!!!!!! You're at the polls index.")
 
+@login_required
 def homepage(request):
     return HttpResponse("Hello, world. HELLLLOOOOOO lOGGGGEEEEEEEDDDDD in user!!!!!! You're at the polls index.")
 
-
+@login_required
 def get_train(request):
     # print(name)
     data = {
@@ -54,7 +55,7 @@ def get_train(request):
 
     return render(request, 'see_trains.html',data)
 
-
+@login_required
 def get_party(request):
     data = {
         "display" : "none"
@@ -124,12 +125,12 @@ def get_party(request):
 
     # return HttpResponse("Hello, world. HELLLLOOOOOO!!!!!! You're at the polls index.")
 
-
+@login_required
 def add_bilti(request):
 
     return render(request, 'bitli_add.html')
 
-
+@login_required
 def add_transactions(request):
     data = {
         "message": "",
@@ -182,7 +183,7 @@ def add_transactions(request):
 
     return render(request, 'add_transactions.html', data)
 
-
+@login_required
 def add_party(request):
     data = {
         "message": "",
@@ -221,7 +222,7 @@ def add_party(request):
             data["message"] = "Party added successfully"
     return render(request, 'add_party.html', data)
 
-
+@login_required
 def add_train(request):
     # return HttpResponse("Hello, world. You're at the add bixsxsxll.")
     data = {
@@ -264,7 +265,7 @@ def add_train(request):
 
     return render(request, 'add_train.html', data)
 
-
+@login_required
 def check_party(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         name = request.GET.get('party_name')
@@ -296,7 +297,7 @@ def check_party(request):
     else:
         return JsonResponse({'request': 'invalid'})
 
-
+@login_required
 def check_train(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         number = request.GET.get('train_number')
@@ -330,7 +331,7 @@ def check_train(request):
     else:
         return JsonResponse({'request': 'invalid'})
 
-
+@login_required
 def add_consignee(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest' and request.method == 'POST':
         name = request.POST.get('name', None)
@@ -352,7 +353,7 @@ def add_consignee(request):
     else:
         return HttpResponse("Only for adding")
 
-
+@login_required
 def save_bilti(request):
     if request.method == 'POST':
         train_number = request.POST.get('train_number')
