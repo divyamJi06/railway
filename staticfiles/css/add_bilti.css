@@ -1,0 +1,126 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    color: #fff;
+    margin: 20px 0;
+  }
+  
+  button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(33.33% - 20px);
+    margin-bottom: 40px;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  input[type="text"], input[type="email"], textarea {
+    background-color: #eee;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  input[type="submit"]:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Define the main container styles */
+  .formclass {
+    background-color: #f2f2f2;
+    padding: 30px;
+    border-radius: 10px;
+    width: 50%;
+    margin: auto;
+  }
+
+  /* Define the header styles */
+  .formclass h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  /* Define the label styles */
+  .formclass label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  /* Define the input field styles */
+  .formclass input[type="text"],
+  .formclass input[type="number"],
+  .formclass input[type="date"] {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    font-size: 16px;
+  }
+
+  /* Define the button styles */
+  .formclass button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  /* Add hover effect to the button */
+  .formclass button:hover {
+    opacity: 0.8;
+  }
+
+
+
+  
