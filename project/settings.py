@@ -9,9 +9,9 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 LOGIN_URL= '/auth/signin'
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'web-production-e0e6.up.railway.app' , "https://web-production-e0e6.up.railway.app"]
+ALLOWED_HOSTS = ['127.0.0.1', 'web-production-44bc.up.railway.app' , "https://web-production-44bc.up.railway.app"]
 
-CSRF_TRUSTED_ORIGINS = ["https://web-production-e0e6.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://web-production-44bc.up.railway.app"]
 
 # Application definition
 
