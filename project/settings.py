@@ -8,7 +8,7 @@ DEBUG = not True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 LOGIN_URL= '/auth/signin'
-ALLOWED_HOSTS = [ '*']
+ALLOWED_HOSTS = [ 'web-production-e0e6.up.railway.app' , "https://web-production-e0e6.up.railway.app"]
 
 
 # Application definition
