@@ -25,6 +25,7 @@ def get_train(request):
     if request.method == "POST":
         train_number = request.POST.get("train_number")
         train = TrainInformation.objects.get(number = train_number)
+        print(train.departure)
         # train = TrainInformation.objects.filter(number = train_number , user = request.user ).first()
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")

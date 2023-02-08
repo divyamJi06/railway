@@ -118,11 +118,11 @@
         <br />
 
         <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" required />
+        <input type="datetime-local" id="start_date" name="start_date" required />
         <br />
 
         <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date"  required />
+        <input type="datetime-local" id="end_date" name="end_date"  required />
         <br />
 
       
@@ -214,23 +214,28 @@
   </body>
   <script src="{% static 'js/get_party.js' %}"></script>
   <script>
-
     var date = new Date();
 
     var day = date.getDate();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
-    
+
+
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
-    
-    var today = year + "-" + month + "-" + day;       
-    document.getElementById("end_date").value = today;
+
+    {% comment %} document.getElementById("end_date").value = today; {% endcomment %}
+    var today = year + "-" + month + "-" + day;
     day = day - 10;
-    if(day < 1) day = 1;
+    if (day < 1) day = 1;
     if (day < 10) day = "0" + day;
-    
-    var today = year + "-" + month + "-" + day;       
+
+    var today = year + "-" + month + "-" + day + "T00:00";
     document.getElementById("start_date").value = today;
+    {% comment %} document.getElementById("start_date").value = "2014-11-16T15:00:33"; {% endcomment %}
+
+    var now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById("end_date").value = now.toISOString().slice(0, 16);
   </script>
 </html>
