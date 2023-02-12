@@ -42,7 +42,7 @@
           type="text"
           class="form-control"
           id="party_name"
-          placeholder="Party Name"
+          placeholder="Party Name" required
         />
         <input type="hidden" name="party_id" id="party_id" readonly>
         <div id="party_details" style="display: none">
@@ -58,18 +58,18 @@
         ></div>
         <br>
 
-        <input type="text" name="narration" placeholder="Narration"><br>
+        <input type="text" name="narration" placeholder="Narration" required><br>
         <!-- <select name="party">
           {% for p in parties %}
             <option value="{{ p.id }}">{{ p.name }}</option>
           {% endfor %}
         </select><br> -->
-        <input type="number" step="0.01" name="amount" placeholder="Amount"><br>
+        <input type="number" step="0.01" name="amount" placeholder="Amount" required><br>
         <select name="type">
           <option value="debit">Debit</option>
           <option value="credit">Credit</option>
         </select><br>
-        <input type="datetime-local" id="date" name="date" placeholder="Date"><br>
+        <input type="datetime-local" id="date" name="date" placeholder="Date" required><br>
         <input type="submit" value="Submit">
       </form>
     </div>

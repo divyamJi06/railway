@@ -159,6 +159,10 @@ def add_transactions(request):
         amount = request.POST.get("amount")
         type = request.POST.get("type")
         party_id = request.POST.get("party_id")
+        if(party_id is None or len(party_id) == 0 ):
+            data['message']  = "Select any one of the parties from drop down or add a new party if you cant find one"
+            return render(request, 'add_transactions.html', data)
+
         date = request.POST.get("date")
         try:
             party = Party.objects.get(id=party_id)
@@ -187,7 +191,8 @@ def add_transactions(request):
 
             data["message"] = "Transaction recorded successfully"
         except Party.DoesNotExist:
-            pass
+            data["message"] = "Party Does not exist"
+            
         except Exception as e:
             print(e)
             # party_create = Party.objects.create(name=name, address=address, gst=gst)
@@ -391,10 +396,19 @@ def add_consignee(request):
 
 @login_required
 def save_bilti(request):
+    data =     {'status': 'failure', 'message': ""}
+    
     if request.method == 'POST':
         train_number = request.POST.get('train_number')
         consignee_id = request.POST.get('consignee_id')
         consignor_id = request.POST.get('consignor_id')
+        if(consignee_id is None or len(consignee_id) == 0 ):
+            data['message']  = "Select any one of the consigneess from drop down or add a new party if you cant find one"
+            return render(request, 'add_party.html', data)
+        if(consignor_id is None or len(consignor_id) == 0 ):
+            data['message']  = "Select any one of the consignors from drop down or add a new party if you cant find one"
+            return render(request, 'add_party.html', data)
+
         # bill_number = request.POST.get('bill_number')
         gr_number = request.POST.get('gr_number')
         bill_date = request.POST.get('bill_date')
@@ -410,7 +424,11 @@ def save_bilti(request):
 
         consignee = Party.objects.get(id=consignee_id)
         consignor = Party.objects.get(id=consignor_id)
-        train_info = TrainInformation.objects.get(number=train_number)
+        train_info = TrainInformation.objects.filter(number = train_number).first()
+        if(train_info is None ):
+            data['message']  = "Train no you specified does not exist. Select any one of the trains from drop down or add a new train from here if you cant find one"
+            return render(request, 'see_trains.html', data)
+    
 
         bill = Bill.objects.create(
             train_info=train_info,
@@ -429,11 +447,13 @@ def save_bilti(request):
             to_destination=to_destination
         )
         # return JsonResponse()
-        return render(request, 'bitli_add.html', {'status': 'success', 'message': "Bilti no {} generated".format(bill.id)})
+        data['status'] = "success"
+        data['message'] = "Bilti no {} Genearted".format(bill.id)
+        return render(request, 'bitli_add.html', data)
 
     else:
 
-        return render(request, 'bitli_add.html', {'status': 'failure', 'message': "Generate bilti here"})
+        return render(request, 'bitli_add.html')
 
 
 

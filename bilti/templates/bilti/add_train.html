@@ -47,19 +47,19 @@
     <form action = "/bilti/add_train/" method="post">
         {% csrf_token %}
         <label for="train_number">Train Number:</label>
-        <input type="number" id="train_number" name="train_number" value="{{train_number}}">
+        <input type="number" id="train_number" name="train_number" value="{{train_number}}" required>
         
         <label for="train_name">Train Name:</label>
-        <input type="text" id="train_name" name="train_name" value="{{train_name}}">
+        <input type="text" id="train_name" name="train_name" value="{{train_name}}" required>
         
         <label for="train_from">Train From:</label>
-        <input type="text" id="train_from" name="train_from" value="{{train_to}}">
+        <input type="text" id="train_from" name="train_from" value="{{train_to}}" required>
         
         <label for="train_to">Train To:</label>
-        <input type="text" id="train_to" name="train_to" value="{{train_from}}">
+        <input type="text" id="train_to" name="train_to" value="{{train_from}}" required>
         
         <label for="mr_amount">MR Amount:</label>
-        <input type="number" step="any" id="mr_amount" name="mr_amount" value="{{mr_amount}}">
+        <input type="number" step="any" id="mr_amount" name="mr_amount" value="{{mr_amount}}" required>
         
         <input type="submit" value="Submit">
       </form>
