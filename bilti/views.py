@@ -486,7 +486,7 @@ def getExcel(request):
             }
             ebill_data = updateDate(request.POST['ebill_data'])
             response = HttpResponse(content_type='application/vnd.ms-excel')
-            response['Content-Disposition'] = 'attachment; filename=BILLS_FINALSS.xlsx'
+            response['Content-Disposition'] = 'attachment; filename={} E-Way Bill.xlsx'.format(client['name'])
 
             bills = ebill_data
             billHead = ['Date', 'GR Number', 'Train Name',
@@ -516,7 +516,7 @@ def getExcel(request):
             }
             ledger_data = updateDate(request.POST['ledger_data'])
             response = HttpResponse(content_type='application/vnd.ms-excel')
-            response['Content-Disposition'] = 'attachment; filename=ledger.xlsx'
+            response['Content-Disposition'] = 'attachment; filename={} Ledger.xlsx'.format(client['name'])
             trans = ledger_data
             balance = 0
             data = {
@@ -534,7 +534,7 @@ def getExcel(request):
                 trainBills_data = updateDate(request.POST['trainBills_data'])
                 print(trainBills_data)
                 response = HttpResponse(content_type='application/vnd.ms-excel')
-                response['Content-Disposition'] = 'attachment; filename=trainhrh.xlsx'
+                response['Content-Disposition'] = 'attachment; filename=Train_Details.xlsx'
                 trains = trainBills_data
                 data = {
                 'heading': ["Date", "GR No.", "Party Name",	"No. of\n Packages	", "Weight",	"Rate",	"Total Amount", "Total(Day)",	"MR Amount",	"P/L(Day)"],
