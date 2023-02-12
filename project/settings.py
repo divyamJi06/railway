@@ -66,12 +66,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 
 # Password validation
@@ -120,8 +115,37 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    }
+if DEBUG:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    }
+else: 
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+USER_DETAILS={
+    
+                "name": "MGT CARGO",
+                "address": "H. NO 119A, NEAR KALI MANDIR, JP ROAD, HARHARGUTTU, BAGBERA, JAMSHEDPUR, EAST SINGHBHUM",
+                "phone": "0987654321",
+                "sac": "",
+                "email": "mgtcargo@gmail.com",
+                "pan": "AKPPG5749H",
+                "gst": "20AKPPG5749HIAB",
+                "bank_name": "AXIS BANK",
+                "bank_ifsc": "123456789012345",
+                "bank_acno": "ICIC0000160"
+}

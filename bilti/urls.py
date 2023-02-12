@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     path('', views.index),
 
+    
+    path('getExcel/', views.getExcel,name="getExcel"),
+
     # # add 
     path('add_bilti/', views.add_bilti,name="add_bilti"),
     path('add_train/', views.add_train,name="add_train"),

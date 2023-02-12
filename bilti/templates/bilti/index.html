@@ -3,7 +3,6 @@
   <head>
     <title>BILTI Calculator</title>
     <style>
-      /* Add your CSS styles here */
       .container {
         display: flex;
         flex-wrap: wrap;
@@ -33,7 +32,7 @@
         height: 200px;
         object-fit: cover;
       }
-      .card a {
+      a {
         text-decoration: none;
         color: #c58415;
         margin: 10px;
@@ -55,49 +54,65 @@
     </style>
   </head>
   <body>
-    <h1 style="text-align: center;"><a style="text-decoration: none;color: #c58415;" href="/"> MGT CARGO </a></h1>
+    <h1 style="text-align: center">
+      <a style="text-decoration: none; color: #c58415" href="/"> MGT CARGO </a>
+    </h1>
     <h4>ADD</h4>
     <div class="container">
       <br />
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Add Bilti" />
-        <a href="/bilti/add_bilti/">Add Bilti</a>
-      </div>
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Add Train" />
-        <a href="/bilti/add_train/">Add Train</a>
-      </div>
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Add Party" />
-        <a href="bilti/add_party/">Add Party</a>
-      </div>
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Add Transactions" />
-        <a href="bilti/add_transactions/">Add Transactions</a>
-      </div>
+      <a href="/bilti/add_bilti/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Add Bilti" />
+          Add Bilti
+        </div>
+      </a>
+      <a href="/bilti/add_train/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Add Train" />
+          Add Train
+        </div>
+      </a>
+      <a href="bilti/add_party/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Add Party" />
+          Add Party
+        </div>
+      </a>
+      <a href="bilti/add_transactions/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Add Transactions" />
+          Add Transactions
+        </div>
+      </a>
       <br /><br />
     </div>
     <h4>FIND</h4>
     <div class="container">
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Get Train" />
-        <a href="bilti/train/">Get Train</a>
-      </div>
-      <div class="card">
-        <img src="https://picsum.photos/300/200" alt="Get Party" />
-        <a href="bilti/party/">Get Party</a>
-      </div>
+      <a href="bilti/train/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Get Train" />
+          Get Train
+        </div>
+      </a>
+      <a href="bilti/party/">
+        <div class="card">
+          <img src="https://picsum.photos/300/200" alt="Get Party" />
+          Get Party
+        </div>
+      </a>
     </div>
   </body>
   <script>
     image = document.querySelectorAll("img");
-    console.log(image)
+    console.log(image);
     for (let index = 0; index < image.length; index++) {
       const element = image[index];
-      console.log(element)
+      console.log(element);
       element.removeAttribute("src");
       imgLink =
-        "https://picsum.photos/200/300/?random&t=" + new Date().getTime()+index;
+        "https://picsum.photos/200/300/?random&t=" +
+        new Date().getTime() +
+        index;
       element.setAttribute("src", imgLink);
     }
   </script>

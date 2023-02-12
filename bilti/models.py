@@ -1,11 +1,26 @@
 from django.db import models
-
+    # client = {
+    #             "name": "Khanna Logistics",
+    #             "address": "Shop no 26,Ambey Market, Baraf Khana,H.C. Sen Marg",
+    #             "gst": "07CLDPK9677B1ZB",
+    #             "city": "NEW DELHI",
+    #             "pin": "110009",
+    #             "mob": "0987654321",
+    #             "tel": "",
+    #             "email": ""
+    #         }
 class Party(models.Model):
 
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     address = models.TextField()
     gst = models.CharField(max_length=20)
+
+    city = models.CharField(max_length=15,null=True)
+    pin = models.IntegerField(null=True)
+    mobile = models.IntegerField(null=True)
+    tel = models.IntegerField(null=True)
+    email = models.EmailField(null=True)
 
 
     def __str__(self):

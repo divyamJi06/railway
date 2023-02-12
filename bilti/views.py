@@ -1,16 +1,19 @@
+from project.settings import USER_DETAILS
 from django.db import IntegrityError
 from django.http import JsonResponse
 from .models import Party, Bill, TrainInformation, Transaction
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
+from .utilities import WriteToExcel, updateDate
 
 
 
 def index(request):
     # return HttpResponse("Hello, world. HELLLLOOOOOO!!!!!! You're at the polls index.")
-    return render(request,"index.html")
+    # return render(request,"index.html")
+    return redirect("/")
 
 @login_required
 def homepage(request):
@@ -24,15 +27,18 @@ def get_train(request):
     }
     if request.method == "POST":
         train_number = request.POST.get("train_number")
-        train = TrainInformation.objects.get(number = train_number)
+        train = TrainInformation.objects.filter(number = train_number).first()
+        if(train is None ):
+            data['message']  = "Select any one of the trains from drop down or add a new train if you cant find one"
+            return render(request, 'see_trains.html', data)
+         
         print(train.departure)
         # train = TrainInformation.objects.filter(number = train_number , user = request.user ).first()
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")
         bills = Bill.objects.filter(train_info = train,date__gte = start_date, date__lte = end_date).order_by('date')
-
+        print("fregref")
         bill_list = []
-        print(bill_list)
         for bill in bills:
 
             bill_list.append({
@@ -47,11 +53,12 @@ def get_train(request):
                 "amount": bill.amount,
                 "mr_amount": bill.train_info.mr_amount,
             })
-            data['bills'] = bill_list
-            data['display'] = "block"
-            data['train'] = train
-        
+        data['bills'] = bill_list
+        data['display'] = "block"
+        data['train'] = train
 
+        
+    print(data)
     return render(request, 'see_trains.html',data)
 
 @login_required
@@ -61,6 +68,10 @@ def get_party(request):
     }
     if request.method == "POST":
         party_id = request.POST.get("party_id")
+        if(party_id is None or len(party_id) == 0 ):
+            data['message']  = "Select any one of the parties from drop down or add a new party if you cant find one"
+            return render(request, 'see_transactions.html', data)
+            
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")
         party = Party.objects.get(id=party_id)
@@ -98,7 +109,7 @@ def get_party(request):
                     "credit": "",
                     "balance": balance,
                 })
-
+        print(transaction_list)
         bills = Bill.objects.filter(consignee=party,date__gte = start_date, date__lte = end_date).order_by("date")
         bill_list = []
         for bill in bills:
@@ -193,11 +204,23 @@ def add_party(request):
         "name": "",
         "address": "",
         "gst": "",
+        "tel": "",
+        "mobile": "",
+        "pin": "",
+        "city": "",
+        "email": "",
     }
     if request.method == "POST":
         name = request.POST.get("name")
         address = request.POST.get("address")
         gst = request.POST.get("gst")
+        email = request.POST.get("email")
+        mobile = request.POST.get("mobile")
+        pin= request.POST.get("pin")
+        tel =request.POST.get("tel")
+        city= request.POST.get("city")
+        if(len(tel)==0):
+            tel = None
         try:
             # party , create = Party.objects.get_or_create(name=name)
             party, created = Party.objects.get_or_create(
@@ -205,6 +228,11 @@ def add_party(request):
                 defaults={
                     "address": address,
                     "gst": gst,
+                    "tel": tel,
+                    "mobile": mobile,
+                    "pin": pin,
+                    "city": city,
+                    "email": email,
                 }
             )
             if created:
@@ -215,6 +243,11 @@ def add_party(request):
                     "name": name,
                     "address": party.address,
                     "gst": party.gst,
+                    "tel": party.tel,
+                    "mobile":party.mobile,
+                    "pin": party.pin,
+                    "city": party.city,
+                    "email": party.email,
                 }
 
             # data["message"] = "Party with this name already exists"
@@ -401,3 +434,96 @@ def save_bilti(request):
     else:
 
         return render(request, 'bitli_add.html', {'status': 'failure', 'message': "Generate bilti here"})
+
+
+
+def getExcel(request):
+                
+    user = USER_DETAILS
+    # client = {
+    #             "name": "Khanna Logistics",
+    #             "address": "Shop no 26,Ambey Market, Baraf Khana,H.C. Sen Marg",
+    #             "city": "NEW DELHI",
+    #             "pin": "110009",
+    #             "gst": "07CLDPK9677B1ZB",
+    #             "mob": "0987654321",
+    #             "tel": "",
+    #             "email": ""
+    #         }
+    if 'excel' in request.POST:
+        if 'ebill' in request.POST:
+            party_id = request.POST.get('party')
+            party = Party.objects.get(id = party_id)
+            client = {
+                "name": party.name,
+                "address": party.address,
+                "city": party.city,
+                "pin": party.pin,
+                "gst": party.gst,
+                "mob": party.mobile,
+                "tel": party.tel,
+                "email": party.email
+            }
+            ebill_data = updateDate(request.POST['ebill_data'])
+            response = HttpResponse(content_type='application/vnd.ms-excel')
+            response['Content-Disposition'] = 'attachment; filename=BILLS_FINALSS.xlsx'
+
+            bills = ebill_data
+            billHead = ['Date', 'GR Number', 'Train Name',
+                'Destination', 'No of PKT', 'Weight', 'Rate', 'Amount']
+
+            data = {
+            'heading': billHead,
+            'bills': bills,
+            'client': client,
+            'user': user,
+            }
+            xlsx_data = WriteToExcel(data,"ebill")
+            response.write(xlsx_data)
+            return response
+        elif 'ledger' in request.POST:
+            party_id = request.POST.get('party')
+            party = Party.objects.get(id = party_id)
+            client = {
+                "name": party.name,
+                "address": party.address,
+                "city": party.city,
+                "pin": party.pin,
+                "gst": party.gst,
+                "mob": party.mobile,
+                "tel": party.tel,
+                "email": party.email
+            }
+            ledger_data = updateDate(request.POST['ledger_data'])
+            response = HttpResponse(content_type='application/vnd.ms-excel')
+            response['Content-Disposition'] = 'attachment; filename=ledger.xlsx'
+            trans = ledger_data
+            balance = 0
+            data = {
+            'heading': ['Date',"ID","Narration","Debit","Credit","Balance"],
+            'trans': trans,
+            'client': client,
+            'user': user,
+            }
+    
+            xlsx_data = WriteToExcel(data,"ledger")
+            response.write(xlsx_data)
+            return response
+        elif 'trainBills' in request.POST:
+                print(request.POST['trainBills_data'])
+                trainBills_data = updateDate(request.POST['trainBills_data'])
+                print(trainBills_data)
+                response = HttpResponse(content_type='application/vnd.ms-excel')
+                response['Content-Disposition'] = 'attachment; filename=trainhrh.xlsx'
+                trains = trainBills_data
+                data = {
+                'heading': ["Date", "GR No.", "Party Name",	"No. of\n Packages	", "Weight",	"Rate",	"Total Amount", "Total(Day)",	"MR Amount",	"P/L(Day)"],
+                'trains': trains,
+                'user': user,
+                }
+        
+                xlsx_data = WriteToExcel(data,"trains")
+                response.write(xlsx_data)
+                return response
+                # return
+    return redirect("/")

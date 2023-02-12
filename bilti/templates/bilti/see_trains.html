@@ -154,6 +154,14 @@
 
       <div id="bill_information">
         <h3>Bill</h3>
+        {% if bills|length <= 0 %} NO DATA FOR THIS TIMELINE {% else %}
+        <form method="post" action="/bilti/getExcel/">
+          {% csrf_token %}
+          <input type="hidden" name="excel" />
+          <input type="hidden" name="trainBills_data" value="{{bills}}" />
+          <input type="hidden" name="trainBills" />
+          <input type="submit" value="Excel Report" />
+        </form>
         <table class="dark-table">
           <thead>
             <tr>
@@ -192,6 +200,7 @@
             {% endfor %}
           </tbody>
         </table>
+        {% endif %}
       </div>
     </div>
   </body>
