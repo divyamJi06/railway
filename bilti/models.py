@@ -1,14 +1,5 @@
 from django.db import models
-    # client = {
-    #             "name": "Khanna Logistics",
-    #             "address": "Shop no 26,Ambey Market, Baraf Khana,H.C. Sen Marg",
-    #             "gst": "07CLDPK9677B1ZB",
-    #             "city": "NEW DELHI",
-    #             "pin": "110009",
-    #             "mob": "0987654321",
-    #             "tel": "",
-    #             "email": ""
-    #         }
+
 class Party(models.Model):
 
     id = models.AutoField(primary_key=True)
@@ -18,8 +9,8 @@ class Party(models.Model):
 
     city = models.CharField(max_length=15,null=True)
     pin = models.IntegerField(null=True)
-    mobile = models.IntegerField(null=True)
-    tel = models.IntegerField(null=True)
+    mobile = models.CharField(null=True)
+    tel = models.CharField(null=True)
     email = models.EmailField(null=True)
 
 

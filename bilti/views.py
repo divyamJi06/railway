@@ -247,7 +247,6 @@ def add_party(request):
             print(party)
             print(create)
             if(create):
-                data['message']  = "Party Created"
                 print("IN PARTY CREATED")
                 data["message"] = "Party added successfully"
                 return render(request, 'add_party.html', data)
@@ -255,8 +254,8 @@ def add_party(request):
                 data['message'] = "Party with this name already exists"
             print("TRY PASS")
         except Exception as e:
+            print("IN PARTY exception")
             print("IN exception {}".format(e))
-            print("IN PARTY CREATED")
             data["message"] = "Error occurred while adding party"
     return render(request, 'add_party.html', data)
 
