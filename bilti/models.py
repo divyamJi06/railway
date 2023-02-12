@@ -9,8 +9,8 @@ class Party(models.Model):
 
     city = models.CharField(max_length=15,null=True)
     pin = models.IntegerField(null=True)
-    mobile = models.CharField(null=True)
-    tel = models.CharField(null=True)
+    mobile = models.CharField(max_length=10,null=True)
+    tel = models.CharField(max_length=10,null=True)
     email = models.EmailField(null=True)
 
 

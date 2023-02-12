@@ -233,6 +233,9 @@ def add_party(request):
         if(len(name)<=2):
             data['message'] = "Party name should be atleast 3 characters"
             return render(request, 'add_party.html', data)
+        if(len(mobile)!=10):
+            data['message'] = "Mobile number invalid"
+            return render(request, 'add_party.html', data)
         print("inside psot got all variables")
         try:
             print("TRY INSIDE")
