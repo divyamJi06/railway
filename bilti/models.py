@@ -11,7 +11,7 @@ from django.db import models
     #         }
 class Party(models.Model):
 
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     address = models.TextField()
     gst = models.CharField(max_length=20)
