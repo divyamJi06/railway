@@ -236,49 +236,28 @@ def add_party(request):
         print("inside psot got all variables")
         try:
             print("TRY INSIDE")
-
-            # party , create = Party.objects.get_or_create(name=name)
-            party, created = Party.objects.get_or_create(
-                name=name,
-                defaults={
-                    "address": address,
-                    "gst": gst,
-                    "tel": tel,
-                    "mobile": mobile,
-                    "pin": pin,
-                    "city": city,
-                    "email": email,
-                }
-            )
-            if created:
-                data['message'] = "Party added successfully"
+            party , create = Party.objects.get_or_create(name=name,defaults={
+                'address':address, 'gst':gst,                 
+                        'tel':tel,
+                        'mobile':mobile,
+                        'pin':pin,
+                        'city':city,
+                        'email': email,
+            })
+            print(party)
+            print(create)
+            if(create):
+                data['message']  = "Party Created"
+                print("IN PARTY CREATED")
+                data["message"] = "Party added successfully"
+                return render(request, 'add_party.html', data)
             else:
-                data = {
-                    "message": "Party with this name already exists",
-                    "name": name,
-                    "address": party.address,
-                    "gst": party.gst,
-                    "tel": party.tel,
-                    "mobile":party.mobile,
-                    "pin": party.pin,
-                    "city": party.city,
-                    "email": party.email,
-                }
+                data['message'] = "Party with this name already exists"
             print("TRY PASS")
-
-            # data["message"] = "Party with this name already exists"
-        except Party.DoesNotExist:
-            print("IN PARTY DOES NOT EXIST")
-            party_create = Party.objects.create(
-                name=name, address=address, gst=gst,                 
-                    tel=tel,
-                    mobile=mobile,
-                    pin=pin,
-                    city=city,
-                    email= email,)
-            party_create.save()
+        except Exception as e:
+            print("IN exception {}".format(e))
             print("IN PARTY CREATED")
-            data["message"] = "Party added successfully"
+            data["message"] = "Error occurred while adding party"
     return render(request, 'add_party.html', data)
 
 @login_required
