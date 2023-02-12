@@ -216,6 +216,7 @@ def add_party(request):
         "email": "",
     }
     if request.method == "POST":
+        print("inside post")
         name = request.POST.get("name")
         address = request.POST.get("address")
         gst = request.POST.get("gst")
@@ -224,9 +225,18 @@ def add_party(request):
         pin= request.POST.get("pin")
         tel =request.POST.get("tel")
         city= request.POST.get("city")
+        print("inside psot got all variables")
         if(len(tel)==0):
-            tel = None
+            tel = None 
+        if(len(email)==0):
+            email = None
+        if(len(name)<=2):
+            data['message'] = "Party name should be atleast 3 characters"
+            return render(request, 'add_party.html', data)
+        print("inside psot got all variables")
         try:
+            print("TRY INSIDE")
+
             # party , create = Party.objects.get_or_create(name=name)
             party, created = Party.objects.get_or_create(
                 name=name,
@@ -254,12 +264,20 @@ def add_party(request):
                     "city": party.city,
                     "email": party.email,
                 }
+            print("TRY PASS")
 
             # data["message"] = "Party with this name already exists"
         except Party.DoesNotExist:
+            print("IN PARTY DOES NOT EXIST")
             party_create = Party.objects.create(
-                name=name, address=address, gst=gst)
+                name=name, address=address, gst=gst,                 
+                    tel=tel,
+                    mobile=mobile,
+                    pin=pin,
+                    city=city,
+                    email= email,)
             party_create.save()
+            print("IN PARTY CREATED")
             data["message"] = "Party added successfully"
     return render(request, 'add_party.html', data)
 
