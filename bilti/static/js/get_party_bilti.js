@@ -106,8 +106,8 @@ async function handleInput() {
     // console.log(suggestion.id);
     // console.log(idOfConsignorOrConsignee);
     if (suggestion.id != idOfConsignorOrConsignee) {
-      suggestionsContainer.appendChild(addSuggestions(suggestion, allID));
     }
+    suggestionsContainer.appendChild(addSuggestions(suggestion, allID));
   });
   suggestionsContainer.style.display = "block";
 }
