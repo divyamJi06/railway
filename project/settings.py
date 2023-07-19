@@ -13,7 +13,7 @@ DEBUG = True
 
 LOGIN_URL= '/auth/signin'
 ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'web-production-44bc.up.railway.app' , "https://web-production-44bc.up.railway.app"]
+ALLOWED_HOSTS = ['127.0.0.1', '3.143.247.255','web-production-44bc.up.railway.app' , "https://web-production-44bc.up.railway.app"]
 
 CSRF_TRUSTED_ORIGINS = ["https://web-production-44bc.up.railway.app"]
 
