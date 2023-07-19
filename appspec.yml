@@ -1,0 +1,40 @@
+version: 0.0
+os: linux
+files: 
+  - source: /
+    destination: /home/ubuntu/workspace/railway
+permissions:
+  - object: /home/ubuntu/workspace/railway
+    owner: ubuntu
+    group: ubuntu
+hooks:
+  BeforeInstall:
+      - location: scripts/docker_down.sh
+        timeout: 300
+        runas: ubuntu
+      - location: scripts/clean_instance.sh
+        timeout: 300
+        runas: ubuntu
+  # AfterInstall:
+  #     - location: scripts/instance_os_dependencies.sh
+  #       timeout: 300
+  #       runas: ubuntu
+  #     - location: scripts/python_dependencies.sh
+  #       timeout: 300
+  #       runas: ubuntu
+  #     - location: scripts/gunicorn.sh
+  #       timeout: 300
+  #       runas: ubuntu
+  #     - location: scripts/nginx.sh
+  #       timeout: 300
+  #       runas: ubuntu
+  ApplicationStop:
+      - location: scripts/stop_app.sh
+        timeout: 300
+        runas: ubuntu
+  ApplicationStart:
+      - location: scripts/docker_start.sh
+        timeout: 300
+        runas: ubuntu
+  
+  
